@@ -1,0 +1,26 @@
+node_modules/
+dist/
+
+# uni-app 编译缓存
+unpackage/
+.hbuilderx/
+
+# 环境变量
+.env.local
+.env.*.local
+
+# 编辑器
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log
+npm-debug.log*

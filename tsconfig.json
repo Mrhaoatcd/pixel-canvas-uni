@@ -1,0 +1,27 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "strict": false,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "lib": ["esnext", "dom"],
+    "types": ["@dcloudio/types"]
+  },
+  "include": [
+    "pages/**/*",
+    "components/**/*",
+    "utils/**/*",
+    "App.vue",
+    "main.ts",
+    "env.d.ts"
+  ]
+}
