@@ -12,8 +12,4 @@ page {
   font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', sans-serif;
   box-sizing: border-box;
 }
-
-* {
-  box-sizing: border-box;
-}
 </style>
