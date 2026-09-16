@@ -10,8 +10,7 @@
     "setting": {
       "urlCheck": false
     },
-    "usingComponents": true,
-    "requiredPrivateInfos": ["chooseImage", "saveImageToPhotosAlbum"]
+    "usingComponents": true
   },
   "h5": {
     "title": "Pixel Canvas",
