@@ -37,6 +37,10 @@ onLoad((options) => {
     style.value = key
     uni.setNavigationBarTitle({ title: `${STYLE_META[key].label} · 风格化` })
   }
+  const preloaded = options?.imageUrl
+  if (preloaded) {
+    originalUrl.value = decodeURIComponent(preloaded)
+  }
 })
 
 const meta = computed(() => style.value ? STYLE_META[style.value] : null)

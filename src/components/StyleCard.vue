@@ -2,7 +2,7 @@
 import type { Style } from '@/utils/types'
 import { STYLE_META } from '@/utils/styles'
 
-const props = defineProps<{ styleKey: Style }>()
+const props = defineProps<{ styleKey: Style; imageUrl?: string }>()
 
 const meta = STYLE_META[props.styleKey]
 
@@ -18,12 +18,16 @@ const ASPECT_PB: Record<string, string> = {
 const paddingBottom = ASPECT_PB[meta.aspect] || '125%'
 
 function goDetail() {
-  uni.navigateTo({ url: `/pages/style-detail/index?style=${props.styleKey}` })
+  if (props.imageUrl) {
+    uni.navigateTo({ url: `/pages/try/index?style=${props.styleKey}&imageUrl=${encodeURIComponent(props.imageUrl)}` })
+  } else {
+    uni.navigateTo({ url: `/pages/style-detail/index?style=${props.styleKey}` })
+  }
 }
 </script>
 
 <template>
-  <view class="card" :style="gradientStyle" @tap="goDetail">
+  <view class="card" :style="gradientStyle" :class="{ 'card--active': imageUrl }" @tap="goDetail">
     <view class="spacer" :style="`padding-bottom: ${paddingBottom};`" />
     <view class="overlay" />
     <view class="content">
@@ -43,6 +47,10 @@ function goDetail() {
   border-radius: 16rpx;
   overflow: hidden;
   box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.card--active {
+  box-shadow: 0 0 0 4rpx #111827, 0 4rpx 16rpx rgba(0, 0, 0, 0.2);
 }
 
 .spacer {
