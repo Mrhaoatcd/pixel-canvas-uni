@@ -52,12 +52,18 @@ function reset() {
   uploadPct.value = 0
 }
 
-function pickImage() {
+function replaceImage() {
+  if (isBusy.value) return
+  originalUrl.value = null
+  errorMsg.value = null
+}
+
+function pickImage(sourceType: 'album' | 'camera') {
   if (isBusy.value) return
   uni.chooseImage({
     count: 1,
     sizeType: ['compressed'],
-    sourceType: ['album', 'camera'],
+    sourceType: [sourceType],
     success: async (res) => {
       const tempPath = res.tempFilePaths[0]
       if (!tempPath) return
@@ -162,7 +168,7 @@ function goBack() {
       <view v-if="originalUrl && phase !== 'uploading'" class="preview-box">
         <image class="preview-img" :src="originalUrl" mode="aspectFit" />
         <view class="replace-row">
-          <text class="replace-btn" :class="{ disabled: isBusy }" @tap="pickImage">换一张图</text>
+          <text class="replace-btn" :class="{ disabled: isBusy }" @tap="replaceImage">换一张图</text>
         </view>
       </view>
 
@@ -175,9 +181,18 @@ function goBack() {
       </view>
 
       <!-- Picker area -->
-      <view v-else class="picker" @tap="pickImage">
-        <text class="picker-icon">＋</text>
-        <text class="picker-hint">点击选择照片</text>
+      <view v-else class="picker">
+        <view class="picker-actions">
+          <view class="picker-btn" @tap="pickImage('album')">
+            <text class="picker-btn-icon">🖼</text>
+            <text class="picker-btn-label">从相册选</text>
+          </view>
+          <view class="picker-divider" />
+          <view class="picker-btn" @tap="pickImage('camera')">
+            <text class="picker-btn-icon">📷</text>
+            <text class="picker-btn-label">立即拍照</text>
+          </view>
+        </view>
         <text class="picker-sub">支持 JPG / PNG / WebP，最大 10MB</text>
       </view>
     </view>
@@ -260,22 +275,43 @@ function goBack() {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   border: 4rpx dashed #d1d5db;
   border-radius: 20rpx;
-  padding: 80rpx 40rpx;
-  gap: 16rpx;
+  padding: 60rpx 40rpx;
+  gap: 32rpx;
 }
 
-.picker-icon {
-  font-size: 80rpx;
-  color: #d1d5db;
+.picker-actions {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  justify-content: center;
+}
+
+.picker-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16rpx;
+  padding: 32rpx 60rpx;
+}
+
+.picker-btn-icon {
+  font-size: 64rpx;
   line-height: 1;
 }
 
-.picker-hint {
-  font-size: 30rpx;
-  color: #6b7280;
+.picker-btn-label {
+  font-size: 28rpx;
+  color: #374151;
+  font-weight: 500;
+}
+
+.picker-divider {
+  width: 2rpx;
+  height: 80rpx;
+  background: #e5e7eb;
 }
 
 .picker-sub {
